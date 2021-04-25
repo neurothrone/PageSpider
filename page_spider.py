@@ -1,7 +1,7 @@
 import os
 import argparse
 
-from utilities import url_utilities
+from utilities import database_utilities, url_utilities
 
 
 def main(database: str, url_list_file: str):
@@ -10,12 +10,20 @@ def main(database: str, url_list_file: str):
     print(f"Working with: {database}")
     print(f"By scanning: {url_list_file}")
 
+    # Url code
     urls = url_utilities.load_urls_from_file(url_list_file)
     for url in urls:
         print(f"Reading {url}")
         page_content = url_utilities.load_page(url=url)
         words = url_utilities.scrape_page(page_contents=page_content)
         big_word_list.extend(words)
+
+    # Database code
+    os.chdir(os.path.dirname(__file__))
+    path = os.path.join(os.getcwd(), "words.db")
+    database_utilities.create_database(database_path=path)
+    database_utilities.save_words_to_database(database_path=path,
+                                              words_list=big_word_list)
 
 
 if __name__ == "__main__":
