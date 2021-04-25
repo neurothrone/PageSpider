@@ -1,3 +1,8 @@
+# PyCharm cache
 /.idea
+
+# Virtual environment
 /venv
+
+# Database
 /words.db
