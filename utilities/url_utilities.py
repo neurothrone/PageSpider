@@ -8,8 +8,7 @@ from urllib.request import urlopen
 def load_urls_from_file(file_path: str):
     try:
         with open(file=file_path, mode="r+") as file_in:
-            content = file_in.readline()
-            return content
+            return [url.strip("\n") for url in file_in.readlines()]
     except FileNotFoundError:
         print(f"[Error]: The file {file_path} could not be found.")
         exit(2)
